@@ -26,6 +26,6 @@ data class BreezyTemperature(
     val temperature: BreezyUnit? = null,
     val sourceFeelsLike: BreezyUnit? = null,
     val computedApparent: BreezyUnit? = null,
-    val computedwindChill: BreezyUnit? = null,
+    val computedWindChill: BreezyUnit? = null,
     val computedHumidex: BreezyUnit? = null,
 )
