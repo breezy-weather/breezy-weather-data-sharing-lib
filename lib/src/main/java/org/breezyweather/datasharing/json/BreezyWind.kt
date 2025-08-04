@@ -27,6 +27,6 @@ data class BreezyWind(
      * Between 0 and 360, or -1 if variable
      */
     val degree: Double? = null,
-    val speed: BreezyDoubleUnit? = null,
-    val gusts: BreezyDoubleUnit? = null,
+    val speed: BreezyUnit? = null,
+    val gusts: BreezyUnit? = null,
 )

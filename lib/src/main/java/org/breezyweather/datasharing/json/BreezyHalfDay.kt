@@ -31,5 +31,4 @@ data class BreezyHalfDay(
     val precipitationProbability: BreezyPrecipitationProbability? = null,
     val precipitationDuration: BreezyPrecipitationDuration? = null,
     val wind: BreezyWind? = null,
-    val cloudCover: BreezyDoubleUnit? = null,
 )

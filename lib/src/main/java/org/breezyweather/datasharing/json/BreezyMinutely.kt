@@ -25,5 +25,5 @@ import kotlinx.serialization.Serializable
 data class BreezyMinutely(
     val date: Long,
     val minuteInterval: Int,
-    val precipitationIntensity: BreezyDoubleUnit? = null,
+    val precipitationIntensity: BreezyUnit? = null,
 )

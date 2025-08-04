@@ -23,6 +23,6 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class BreezyNormals(
-    val daytimeTemperature: BreezyDoubleUnit? = null,
-    val nighttimeTemperature: BreezyDoubleUnit? = null,
+    val daytimeTemperature: BreezyUnit? = null,
+    val nighttimeTemperature: BreezyUnit? = null,
 )

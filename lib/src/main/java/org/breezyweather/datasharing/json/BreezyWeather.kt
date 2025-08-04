@@ -31,4 +31,8 @@ data class BreezyWeather(
      * Key is the month between 1 and 12
      */
     val normals: Map<Int, BreezyNormals>? = null,
+    /**
+     * Key is an identifier to the feature (forecast, normals, etc)
+     */
+    val sources: Map<String, BreezySource>? = null,
 )

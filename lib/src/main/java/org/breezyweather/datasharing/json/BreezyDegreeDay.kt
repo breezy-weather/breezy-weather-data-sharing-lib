@@ -23,6 +23,6 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class BreezyDegreeDay(
-    val heating: BreezyDoubleUnit? = null,
-    val cooling: BreezyDoubleUnit? = null,
+    val heating: BreezyUnit? = null,
+    val cooling: BreezyUnit? = null,
 )

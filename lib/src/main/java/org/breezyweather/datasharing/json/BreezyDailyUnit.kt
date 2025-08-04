@@ -3,7 +3,7 @@
  *
  * Breezy Weather is free software: you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by the
- * Free Software Foundation, version 3 of the License.
+ * Free Software Foundation, either version 3 of the License.
  *
  * Breezy Weather is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
@@ -18,14 +18,9 @@ package org.breezyweather.datasharing.json
 
 import kotlinx.serialization.Serializable
 
-/**
- * Precipitation duration
- */
 @Serializable
-data class BreezyPrecipitationDuration(
-    val total: BreezyUnit? = null,
-    val thunderstorm: BreezyUnit? = null,
-    val rain: BreezyUnit? = null,
-    val snow: BreezyUnit? = null,
-    val ice: BreezyUnit? = null,
+data class BreezyDailyUnit(
+    val avg: BreezyUnit? = null,
+    val max: BreezyUnit? = null,
+    val min: BreezyUnit? = null,
 )

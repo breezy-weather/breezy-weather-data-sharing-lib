@@ -23,9 +23,9 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class BreezyPrecipitationProbability(
-    val total: BreezyDoubleUnit? = null,
-    val thunderstorm: BreezyDoubleUnit? = null,
-    val rain: BreezyDoubleUnit? = null,
-    val snow: BreezyDoubleUnit? = null,
-    val ice: BreezyDoubleUnit? = null,
+    val total: BreezyUnit? = null,
+    val thunderstorm: BreezyUnit? = null,
+    val rain: BreezyUnit? = null,
+    val snow: BreezyUnit? = null,
+    val ice: BreezyUnit? = null,
 )

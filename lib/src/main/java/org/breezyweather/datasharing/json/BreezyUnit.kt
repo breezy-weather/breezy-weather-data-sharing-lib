@@ -22,7 +22,7 @@ import kotlinx.serialization.Serializable
  * Class that provides a weather data in the user preferred value
  */
 @Serializable
-data class BreezyDoubleUnit(
+data class BreezyUnit(
     /**
      * Example: 75.2
      */
@@ -31,4 +31,17 @@ data class BreezyDoubleUnit(
      * Example: f
      */
     val unit: String? = null,
+    /**
+     * Some units have a description
+     * Examples:
+     * - Gentle breeze
+     * - Partly cloudy
+     * - Very poor (visibility)
+     */
+    val description: String? = null,
+    /**
+     * Some units have a color (UV index, etc)
+     * In hexadecimal format
+     */
+    val color: String? = null,
 )

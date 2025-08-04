@@ -23,9 +23,9 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class BreezyTemperature(
-    val temperature: BreezyDoubleUnit? = null,
-    val sourceFeelsLike: BreezyDoubleUnit? = null,
-    val computedApparent: BreezyDoubleUnit? = null,
-    val computedwindChill: BreezyDoubleUnit? = null,
-    val computedHumidex: BreezyDoubleUnit? = null,
+    val temperature: BreezyUnit? = null,
+    val sourceFeelsLike: BreezyUnit? = null,
+    val computedApparent: BreezyUnit? = null,
+    val computedwindChill: BreezyUnit? = null,
+    val computedHumidex: BreezyUnit? = null,
 )

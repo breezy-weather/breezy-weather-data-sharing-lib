@@ -37,6 +37,11 @@ data class BreezyDaily(
     val airQuality: BreezyAirQuality? = null,
     // id of the pollen => details
     val pollen: Map<String, BreezyPollen>? = null,
-    val uV: BreezyUV? = null,
-    val sunshineDuration: BreezyDoubleUnit? = null,
+    val uV: BreezyUnit? = null,
+    val sunshineDuration: BreezyUnit? = null,
+    val relativeHumidity: BreezyDailyUnit? = null,
+    val dewPoint: BreezyDailyUnit? = null,
+    val pressure: BreezyDailyUnit? = null,
+    val cloudCover: BreezyDailyUnit? = null,
+    val visibility: BreezyDailyUnit? = null,
 )

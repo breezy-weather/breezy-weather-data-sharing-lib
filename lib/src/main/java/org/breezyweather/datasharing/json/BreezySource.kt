@@ -19,30 +19,20 @@ package org.breezyweather.datasharing.json
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class BreezyCurrent(
+data class BreezySource(
     /**
-     * Description of the weather condition. Usually provided by the source, otherwise fallbacks
-     * to a description of the weather code
+     * The type of data provided by the source, translated
+     * Example: "Air quality"
      */
-    val weatherText: String? = null,
+    val type: String? = null,
     /**
-     * See WeatherCode enum to see which codes we support
+     * Credits to display
+     * Example: "Open-Meteo (CC BY 4.0)"
      */
-    val weatherCode: String? = null,
-    val temperature: BreezyTemperature? = null,
-    val wind: BreezyWind? = null,
-    val uV: BreezyUnit? = null,
-    val airQuality: BreezyAirQuality? = null,
-    val relativeHumidity: BreezyUnit? = null,
-    val dewPoint: BreezyUnit? = null,
+    val text: String? = null,
     /**
-     * Pressure at sea level
+     * Links to insert in the text
+     * Example: {"CC BY 4.0" to "https://creativecommons.org/licenses/by/4.0/"}
      */
-    val pressure: BreezyUnit? = null,
-    val cloudCover: BreezyUnit? = null,
-    val visibility: BreezyUnit? = null,
-    /**
-     * Don't rely on this value, it will probably be removed in the future
-     */
-    val ceiling: BreezyUnit? = null,
+    val links: Map<String, String>? = null,
 )

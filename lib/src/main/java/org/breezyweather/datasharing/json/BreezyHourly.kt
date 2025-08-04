@@ -35,13 +35,13 @@ data class BreezyHourly(
     val precipitationProbability: BreezyPrecipitationProbability? = null,
     val wind: BreezyWind? = null,
     val airQuality: BreezyAirQuality? = null,
-    val uV: BreezyUV? = null,
-    val relativeHumidity: BreezyDoubleUnit? = null,
-    val dewPoint: BreezyDoubleUnit? = null,
+    val uV: BreezyUnit? = null,
+    val relativeHumidity: BreezyUnit? = null,
+    val dewPoint: BreezyUnit? = null,
     /**
      * Pressure at sea level
      */
-    val pressure: BreezyDoubleUnit? = null,
-    val cloudCover: BreezyDoubleUnit? = null,
-    val visibility: BreezyDoubleUnit? = null,
+    val pressure: BreezyUnit? = null,
+    val cloudCover: BreezyUnit? = null,
+    val visibility: BreezyUnit? = null,
 )
