@@ -20,8 +20,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class BreezyBulletin(
-    val dailyForecast: String? = null,
-    val hourlyForecast: String? = null,
-    val minutelyForecastTitle: String? = null,
-    val minutelyForecastDescription: String? = null,
+    val weekly: String? = null,
+    val nextHours: String? = null,
+    val nowcastingHeadline: String? = null,
+    val nowcastingDescription: String? = null,
 )

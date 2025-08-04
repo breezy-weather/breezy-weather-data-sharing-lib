@@ -20,7 +20,21 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class BreezyDailyUnit(
+    /**
+     * Average value of the day. Some sources may provide a mean value here
+     */
     val avg: BreezyUnit? = null,
+    /**
+     * Maximum value of the day
+     */
     val max: BreezyUnit? = null,
+    /**
+     * Minimum value of the day
+     */
     val min: BreezyUnit? = null,
+    /**
+     * A textual representation of the daily values
+     * Always null for the moment
+     */
+    val summary: String? = null,
 )

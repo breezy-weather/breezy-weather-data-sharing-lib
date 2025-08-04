@@ -24,7 +24,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class BreezyHalfDay(
     val weatherText: String? = null,
-    val weatherPhase: String? = null,
+    val weatherSummary: String? = null,
     val weatherCode: String? = null,
     val temperature: BreezyTemperature? = null,
     val precipitation: BreezyPrecipitation? = null,

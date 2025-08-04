@@ -30,10 +30,6 @@ data class BreezyDaily(
     val day: BreezyHalfDay? = null,
     val night: BreezyHalfDay? = null,
     val degreeDay: BreezyDegreeDay? = null,
-    val sun: BreezyAstro? = null,
-    val twilight: BreezyAstro? = null,
-    val moon: BreezyAstro? = null,
-    val moonPhase: BreezyMoonPhase? = null,
     val airQuality: BreezyAirQuality? = null,
     // id of the pollen => details
     val pollen: Map<String, BreezyPollen>? = null,
