@@ -30,6 +30,7 @@ class BreezyContentProvider(
     val readPermission: String
     private val versionUri: Uri
     private val locationsUri: Uri
+    private val weatherUri: Uri
 
     init {
         if (requestedPackage !in SUPPORTED_PACKAGES) {
@@ -40,6 +41,7 @@ class BreezyContentProvider(
         val authority = "$requestedPackage.provider.weather"
         versionUri = "content://$authority/${ProviderUri.VERSION_PATH}".toUri()
         locationsUri = "content://$authority/${ProviderUri.LOCATIONS_PATH}".toUri()
+        weatherUri = "content://$authority/${ProviderUri.WEATHER_PATH}".toUri()
     }
 
     fun isCompatible(context: Context): Boolean {
@@ -66,25 +68,55 @@ class BreezyContentProvider(
         return false
     }
 
-    fun getLocations(context: Context): List<BreezyLocation> {
+    fun getLocations(context: Context, limit: Int?): List<BreezyLocation> {
         val locations = mutableListOf<BreezyLocation>()
         val contentResolver = context.contentResolver
         try {
-            contentResolver.query(locationsUri, null, null, null, null).use { cursor ->
-                if (cursor == null || cursor.count == 0) {
-                    Log.d(TAG, "No locations found")
-                    return locations
-                }
-                while (cursor.moveToNext()) {
-                    locations.add(BreezyLocation.Companion.toBreezyLocation(cursor))
-                }
+            val uri = if (limit != null && limit > 0) {
+                locationsUri.buildUpon().appendQueryParameter("limit", limit.toString()).build();
+            } else {
+                locationsUri
             }
+
+            contentResolver
+                .query(
+                    uri,
+                    null,
+                    null,
+                    null,
+                    null
+                ).use { cursor ->
+                    if (cursor == null || cursor.count == 0) {
+                        Log.d(TAG, "No locations found")
+                        return locations
+                    }
+                    while (cursor.moveToNext()) {
+                        locations.add(BreezyLocation.Companion.toBreezyLocation(cursor))
+                    }
+                }
         } catch (e: Exception) {
             Log.e(TAG, "Failed to list locations", e)
             return locations
         }
 
         return locations
+    }
+
+    fun getLocationWithWeather(context: Context, locationId: String): BreezyLocation? {
+        val contentResolver = context.contentResolver
+        try {
+            contentResolver.query(weatherUri, null, "id=$locationId", null, null).use { cursor ->
+                if (cursor == null || cursor.count == 0) {
+                    Log.d(TAG, "No matching location found")
+                    return null
+                }
+                cursor.moveToNext()
+                return BreezyLocation.Companion.toBreezyLocation(cursor)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to get weather for a location", e)
+            return null
+        }
     }
 
     companion object {

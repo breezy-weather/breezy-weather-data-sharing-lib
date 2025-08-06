@@ -27,18 +27,30 @@ import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.breezyweather.datasharing.BreezyLocation
 import org.breezyweather.datasharing.sample.ui.theme.MyApplicationTheme
-
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +67,7 @@ class MainActivity : ComponentActivity() {
 
         val compatibleVersion = contentProvider?.isCompatible(this) ?: false
 
-        val locations = if (compatibleVersion) contentProvider.getLocations(this) else emptyList()
+        val locations = if (compatibleVersion) contentProvider.getLocations(this, 5) else emptyList()
 
         enableEdgeToEdge()
         setContent {
@@ -67,6 +79,9 @@ class MainActivity : ComponentActivity() {
                         permissionGranted = permissionGranted,
                         compatibleVersion = compatibleVersion,
                         locations = locations,
+                        loadWeather = { locationId ->
+                            contentProvider?.getLocationWithWeather(this, locationId)
+                        },
                         modifier = Modifier.padding(
                             top = innerPadding.calculateTopPadding() + 16.dp,
                             bottom = innerPadding.calculateBottomPadding() + 16.dp,
@@ -99,10 +114,15 @@ fun BreezyWeatherDataSharingShowcase(
     permissionGranted: Boolean,
     compatibleVersion: Boolean,
     locations: List<BreezyLocation>,
-    modifier: Modifier = Modifier
+    loadWeather: (String) -> BreezyLocation?,
+    modifier: Modifier = Modifier,
 ) {
+    val isLoading = remember { mutableStateOf(false) }
+    val selectedLocation: MutableState<BreezyLocation?> = remember { mutableStateOf(null) }
+    val scope = CoroutineScope(Job() + Dispatchers.Default)
+
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         item {
@@ -139,8 +159,38 @@ fun BreezyWeatherDataSharingShowcase(
                         Text(text = "Found ${locations.size} locations")
                     }
                     items(locations) {
-                        // Just print for the example
-                        Text(text = "$it")
+                        TextButton(
+                            onClick = {
+                                selectedLocation.value = null
+                                isLoading.value = true
+                                scope.launch {
+                                    selectedLocation.value = loadWeather(it.id)
+                                    isLoading.value = false
+                                }
+                            }
+                        ) {
+                            Text(text = it.customName ?: it.city)
+                        }
+                    }
+
+                    if (isLoading.value) {
+                        // Just print the object for the example
+                        item {
+                            CircularProgressIndicator(
+                                modifier = Modifier.width(64.dp),
+                                color = MaterialTheme.colorScheme.secondary,
+                                trackColor = MaterialTheme.colorScheme.surfaceVariant
+                            )
+                        }
+                    }
+
+                    if (selectedLocation.value != null) {
+                        // Just print the object for the example
+                        item {
+                            Text(
+                                text = "${selectedLocation.value}"
+                            )
+                        }
                     }
                 }
             }

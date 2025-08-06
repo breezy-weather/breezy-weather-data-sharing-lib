@@ -73,9 +73,9 @@ data class BreezyLocation(
                 admin4Code = cursor.getStringOrNull(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_ADMIN4_CODE)),
                 city = cursor.getString(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_CITY)),
                 district = cursor.getStringOrNull(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_DISTRICT)),
-                weather = json.decodeFromString<BreezyWeather>(
-                    cursor.getString(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_WEATHER))
-                )
+                weather = cursor.getStringOrNull(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_WEATHER))?.let {
+                    json.decodeFromString<BreezyWeather>(it)
+                }
             )
         }
     }
