@@ -23,12 +23,6 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class BreezyPollutant(
-    val id: String,
-    val name: String? = null,
-    val concentration: Double? = null,
-    val index: Int? = null,
-    /**
-     * Color in hex format
-     */
-    val color: String? = null,
+    val index: BreezyUnit? = null,
+    val concentration: BreezyUnit? = null,
 )

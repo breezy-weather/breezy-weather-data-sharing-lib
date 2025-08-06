@@ -23,11 +23,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class BreezyAirQuality(
-    val index: Int? = null,
-    /**
-     * Color in hex format
-     */
-    val indexColor: String? = null,
+    val index: BreezyUnit? = null,
     // id of the pollutant => details
     val pollutants: Map<String, BreezyPollutant>? = null,
 )
