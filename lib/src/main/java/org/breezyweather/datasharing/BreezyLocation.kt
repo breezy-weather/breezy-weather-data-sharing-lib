@@ -18,16 +18,19 @@ package org.breezyweather.datasharing
 
 import android.database.Cursor
 import kotlinx.serialization.json.Json
+import org.breezyweather.datasharing.extensions.getBlobOrNull
 import org.breezyweather.datasharing.extensions.getStringOrNull
+import org.breezyweather.datasharing.extensions.gzipDecompress
 import org.breezyweather.datasharing.json.BreezyWeather
 import org.breezyweather.datasharing.provider.ProviderLocation
+import java.util.TimeZone
 
 data class BreezyLocation(
     val id: String,
     val latitude: Double,
     val longitude: Double,
     val isCurrentPosition: Boolean = false,
-    val timeZone: String,
+    val timeZone: TimeZone,
 
     val customName: String?,
     val country: String,
@@ -59,7 +62,7 @@ data class BreezyLocation(
                 latitude = cursor.getDouble(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_LATITUDE)),
                 longitude = cursor.getDouble(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_LONGITUDE)),
                 isCurrentPosition = cursor.getInt(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_IS_CURRENT_POSITION)) > 0,
-                timeZone = cursor.getString(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_TIMEZONE)),
+                timeZone = TimeZone.getTimeZone(cursor.getString(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_TIMEZONE))),
                 customName = cursor.getStringOrNull(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_CUSTOM_NAME)),
                 country = cursor.getString(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_COUNTRY)),
                 countryCode = cursor.getStringOrNull(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_COUNTRY_CODE)),
@@ -73,8 +76,8 @@ data class BreezyLocation(
                 admin4Code = cursor.getStringOrNull(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_ADMIN4_CODE)),
                 city = cursor.getString(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_CITY)),
                 district = cursor.getStringOrNull(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_DISTRICT)),
-                weather = cursor.getStringOrNull(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_WEATHER))?.let {
-                    json.decodeFromString<BreezyWeather>(it)
+                weather = cursor.getBlobOrNull(cursor.getColumnIndexOrThrow(ProviderLocation.COLUMN_WEATHER))?.let {
+                    json.decodeFromString<BreezyWeather>(it.gzipDecompress())
                 }
             )
         }

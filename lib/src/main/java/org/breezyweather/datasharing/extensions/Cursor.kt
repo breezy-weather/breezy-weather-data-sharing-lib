@@ -18,5 +18,24 @@ package org.breezyweather.datasharing.extensions
 
 import android.database.Cursor
 
-public inline fun Cursor.getStringOrNull(index: Int): String? =
-    if (isNull(index)) null else getString(index)
+/**
+ * Returns the value of the requested column as a nullable byte array.
+ *
+ * The result and whether this method throws an exception when the column type is not a blob type is
+ * implementation-defined.
+ *
+ * @see Cursor.isNull
+ * @see Cursor.getBlob
+ */
+inline fun Cursor.getBlobOrNull(index: Int) = if (isNull(index)) null else getBlob(index)
+
+/**
+ * Returns the value of the requested column as a nullable string.
+ *
+ * The result and whether this method throws an exception when the column type is not a string type
+ * is implementation-defined.
+ *
+ * @see Cursor.isNull
+ * @see Cursor.getString
+ */
+inline fun Cursor.getStringOrNull(index: Int) = if (isNull(index)) null else getString(index)
