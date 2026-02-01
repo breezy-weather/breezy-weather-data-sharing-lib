@@ -122,8 +122,8 @@ class BreezyContentProvider(
     companion object {
         private const val TAG = "BreezyContentProvider"
         val SUPPORTED_PACKAGES = arrayOf(
-            "org.breezyweather",
-            "org.breezyweather.debug"
+            "org.breezyweather.debug",
+            "org.breezyweather"
         )
     }
 }
